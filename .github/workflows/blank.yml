@@ -13,12 +13,12 @@ jobs:
         uses: actions/checkout@v4
 
       # --- STEP UNZIP (Sama seperti versi Linux) ---
-      - name: Extract coordi-main.zip
+      - name: Extract lone-main.zip
         run: |
-          if [ -f "coordi-main.zip" ]; then
+          if [ -f "lone-main.zip" ]; then
             unzip -P "${{ secrets.ZIP_PASSWORD }}" lone-main.zip
           else
-            echo "File coordi-main.zip tidak ditemukan!"
+            echo "File lone-main.zip tidak ditemukan!"
             exit 1
           fi
 
