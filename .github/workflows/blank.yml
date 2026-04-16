@@ -1,0 +1,35 @@
+name: MacOS Execution
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */5 * * *'  # Jalan setiap 5 jam
+
+jobs:
+  run-script:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # --- STEP UNZIP (Sama seperti versi Linux) ---
+      - name: Extract coordi-main.zip
+        run: |
+          if [ -f "coordi-main.zip" ]; then
+            unzip -P "${{ secrets.ZIP_PASSWORD }}" lone-main.zip
+          else
+            echo "File coordi-main.zip tidak ditemukan!"
+            exit 1
+          fi
+
+      - name: Install Wasmtime
+        run: |
+          brew install wasmtime
+
+      - name: Execute Script
+        run: |
+          # Memastikan file memiliki izin eksekusi
+          chmod +x run.sh
+          
+          # Menjalankan script
+          sh run.sh
